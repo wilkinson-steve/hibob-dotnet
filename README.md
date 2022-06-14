@@ -6,7 +6,7 @@ Hibob Inc is the the supplier of a robust, professional HR/people management pla
 
 **hibob-dotnet** is an open-source C# library designed to make it easy to use the Hibob API in .NET applications.  
 
-** +++ Important: hibob-dotnet is an independent initiative and is in no way connected with Hibob, Inc. +++ **
+**\*\*\* Important: hibob-dotnet is an independent initiative and is in no way connected with Hibob, Inc. \*\*\***
 
 ## Features
 

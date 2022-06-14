@@ -2,7 +2,7 @@
 
 public class Employment
 {
-    public int? Fte { get; set; }
+    public decimal? Fte { get; set; }
     public string? Type { get; set; }
     public object? FlsaCode { get; set; }
     public string? Contract { get; set; }

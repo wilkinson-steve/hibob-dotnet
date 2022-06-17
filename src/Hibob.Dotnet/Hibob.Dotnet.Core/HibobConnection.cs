@@ -16,7 +16,7 @@ public class HibobConnection
 
         _client.Authenticator = new HttpBasicAuthenticator(username, apiKey);
 
-        _client.UseSerializer(() => new HibobJsonSerializer());
+        //_client.UseSerializer(() => new HibobJsonSerializer());
     }
 
     public async Task<List<Employee>?> GetEmployeesAsync()

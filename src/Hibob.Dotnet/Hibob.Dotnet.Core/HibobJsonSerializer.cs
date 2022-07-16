@@ -1,37 +1,33 @@
 ﻿using RestSharp;
-using RestSharp.Deserializers;
-using RestSharp.Serialization;
 using RestSharp.Serializers;
 using System.Text.Json;
 
 namespace Hibob.Dotnet.Core
 {
-    // Commented out for the moment due to Restsharp external dependency issue
+    internal class HibobJsonSerializer : IRestSerializer, ISerializer, IDeserializer
+    {
+        private readonly JsonSerializerOptions _options;
 
-    //internal class HibobJsonSerializer : IRestSerializer, ISerializer, IDeserializer
-    //{
-    //    private readonly JsonSerializerOptions _options;
+        public HibobJsonSerializer()
+        {
+            _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+        }
 
-    //    public HibobJsonSerializer()
-    //    {
-    //        _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-    //    }
+        public ISerializer Serializer => this;
 
-    //    public ISerializer Serializer => this;
+        public IDeserializer Deserializer => this;
 
-    //    public IDeserializer Deserializer => this;
+        public string[] AcceptedContentTypes => RestSharp.Serializers.ContentType.JsonAccept;
 
-    //    public string[] AcceptedContentTypes => RestSharp.Serializers.ContentType.JsonAccept;
+        public SupportsContentType SupportsContentType => contentType => contentType.EndsWith("json", StringComparison.InvariantCultureIgnoreCase);
 
-    //    public SupportsContentType SupportsContentType => contentType => contentType.EndsWith("json", StringComparison.InvariantCultureIgnoreCase);
+        public DataFormat DataFormat { get; } = DataFormat.Json;
+        public string ContentType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-    //    public DataFormat DataFormat { get; } = DataFormat.Json;
-    //    public string ContentType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public T? Deserialize<T>(RestResponse response) => JsonSerializer.Deserialize<T>(response.Content!, _options);
 
-    //    public T? Deserialize<T>(RestResponse response) => JsonSerializer.Deserialize<T>(response.Content!, _options);
+        public string? Serialize(object? obj) => obj == null ? null : JsonSerializer.Serialize(obj, _options);
 
-    //    public string? Serialize(object? obj) => obj == null ? null : JsonSerializer.Serialize(obj, _options);
-
-    //    public string? Serialize(Parameter parameter) => Serialize(parameter.Value);
-    //}
+        public string? Serialize(Parameter parameter) => Serialize(parameter.Value);
+    }
 }

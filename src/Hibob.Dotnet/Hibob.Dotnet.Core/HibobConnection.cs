@@ -16,12 +16,12 @@ public class HibobConnection
 
         _client.Authenticator = new HttpBasicAuthenticator(username, apiKey);
 
-        //_client.UseSerializer(() => new HibobJsonSerializer());
+        _client.UseSerializer(() => new HibobJsonSerializer());
     }
 
-    public async Task<List<Employee>?> GetEmployeesAsync()
+    public async Task<List<Employee>?> GetEmployeesAsync(bool includeInactiveEmployees = false)
     {
-        var request = new RestRequest("people");
+        var request = new RestRequest($"people?showInactive={includeInactiveEmployees}");
 
         var employeeModel =  await _client.GetAsync<EmployeesModel>(request);
 
